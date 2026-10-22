@@ -3,6 +3,7 @@ package com.applovin.mediation.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 import com.applovin.mediation.MaxAdFormat;
 import com.applovin.mediation.adapter.MaxAdViewAdapter;
@@ -493,6 +494,11 @@ public class UnityAdsMediationAdapter
             {
                 return new BannerSize( adaptiveAdWidth, inlineMaximumHeight );
             }
+
+            // If not specified, inline maximum height will be the device height according to current device orientation
+            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+            int deviceHeight = AppLovinSdkUtils.pxToDp( context, displayMetrics.heightPixels );
+            return new BannerSize( adaptiveAdWidth, deviceHeight );
         }
 
         // Return anchored size by default
